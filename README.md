@@ -1,5 +1,5 @@
 # Angular Spring Demo Application 
-[![Build Status](https://travis-ci.org/holisticon/continous-delivery-demo.svg?branch=master)](https://travis-ci.org/holisticon/continous-delivery-demo) [![Build Status](https://server.holisticon.de/jenkins/buildStatus/icon?job=Public/ContinousDelivery_Demo)](https://server.holisticon.de/jenkins/job/Public/ContinousDelivery_Demo)
+[![Build Status](https://travis-ci.org/holisticon/continous-delivery-demo.svg?branch=master)](https://travis-ci.org/holisticon/continous-delivery-demo) [![Build Status](https://server.holisticon.de/jenkins/job/Public/job/ContinousDelivery_Demo/)](https://server.holisticon.de/jenkins/job/Public/ContinousDelivery_Demo)
 
 ## Development-Setup
 
