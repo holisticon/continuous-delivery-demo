@@ -10,11 +10,16 @@ node {
    sh "${mvnHome}/bin/mvn clean package"
    
    stage 'Unit-Tests'
-   sh "${mvnHome}/bin/mvn test"
+   sh "${mvnHome}/bin/mvn test -Dmaven.test.failure.ignore"
+   
+   step([
+       $class: 'JUnitResultArchiver', 
+       testResults: 'angular-spring-boot-webapp/target/surefire-reports/TEST*.xml'
+   ])
    
    stage 'Integration-Tests'
    wrap([$class: 'Xvfb']) {
-        sh "export DOCKER_HOST=tcp://localhost:4243 && ${mvnHome}/bin/mvn -Pdocker clean verify"
+        sh "export DOCKER_HOST=tcp://localhost:4243 && ${mvnHome}/bin/mvn -Pdocker clean verify -Dmaven.test.failure.ignore"
    }
    
    step([
@@ -24,7 +29,7 @@ node {
     ])
    step([
        $class: 'JUnitResultArchiver', 
-       testResults: 'angular-spring-boot-webapp/target/surefire-reports/TEST*.xml,target/failsafe-reports/TEST*.xml'
+       testResults: 'angular-spring-boot-webapp/target/failsafe-reports/TEST*.xml'
    ])
    publishHTML(target: [
        reportDir:'angular-spring-boot-webapp/target/site/serenity/',
