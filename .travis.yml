@@ -11,4 +11,4 @@ install:
   - "export PATH=`pwd`/bin:$PATH"
 
 script:
-  - export DISPLAY=:99.0 && mvn clean test
+  - export DISPLAY=:99.0 && mvn clean test -q
