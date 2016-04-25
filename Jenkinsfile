@@ -14,7 +14,7 @@ node {
    
    stage 'Integration-Tests'
    wrap([$class: 'Xvfb']) {
-        sh "${mvnHome}/bin/mvn -Pdocker clean verify"
+        sh "export DOCKER_HOST=tcp://localhost:4243 && ${mvnHome}/bin/mvn -Pdocker clean verify"
    }
    
    step([
