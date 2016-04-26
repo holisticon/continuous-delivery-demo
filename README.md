@@ -1,16 +1,12 @@
-# Angular Spring Demo Application 
+# Continous Delivery Demo
 [![Build Status](https://travis-ci.org/holisticon/continous-delivery-demo.svg?branch=master)](https://travis-ci.org/holisticon/continous-delivery-demo) [![Build Status](https://server.holisticon.de/jenkins/buildStatus/icon?job=Public/ContinousDelivery_Demo)](https://server.holisticon.de/jenkins/job/Public/job/ContinousDelivery_Demo)
 ## Development-Setup
 
 ### Setup
 
 * Install JDK 8+ and Maven 3.3+
-* Install MySQL5.5+ Server
+* Install [docker](http://docs.docker.com) (optional)
 * Install NodeJS and npm (http://nodejs.org/download/)
-* Install Build Tools
-```bash
-$ sudo npm install -g bower grunt-cli karma
-```
 * Install [docker](http://docs.docker.com) (optional)
 
 
