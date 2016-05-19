@@ -5,7 +5,7 @@
 ### Setup
 
 * Install JDK 8+ and Maven 3.3+
-* Install [docker](http://docs.docker.com) (optional)
+* Install [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
 * Install NodeJS and npm (http://nodejs.org/download/)
 * Install [docker](http://docs.docker.com) (optional)
 
