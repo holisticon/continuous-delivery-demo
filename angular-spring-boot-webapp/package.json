@@ -33,7 +33,7 @@
     "grunt-ngdocs": "0.2.9",
     "grunt-open": "0.2.3",
     "grunt-raml2html": "0.3.2",
-    "grunt-sass": "1.1.0",
+    "grunt-sass": "1.2.0",
     "grunt-svgmin": "3.1.2",
     "grunt-text-replace": "0.4.0",
     "grunt-usemin": "3.1.1",
@@ -46,8 +46,8 @@
     "karma-junit-reporter": "0.3.1",
     "karma-phantomjs-launcher": "*",
     "load-grunt-tasks": "3.1.0",
-    "phantomjs": "1.9.17",
     "node-sass": "2.1.1",
+    "phantomjs": "1.9.17",
     "serve-static": "1.10.0",
     "time-grunt": "1.0.0",
     "vinyl-fs": "2.4.2"
