@@ -1,1 +1,1 @@
-web java -Dserver.port=$PORT $JAVA_OPTS  -Dspring.profiles.active=heroku -jar angular-spring-boot-webapp/target/app.jar
+web java -Dserver.port=$PORT $JAVA_OPTS  -Dspring.profiles.active=heroku -jar angular-spring-boot-webapp/target/ng-spring-boot.jar
