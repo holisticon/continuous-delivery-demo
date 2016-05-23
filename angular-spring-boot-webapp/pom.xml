@@ -21,7 +21,7 @@
 
     <properties>
         <skipUnitTests>false</skipUnitTests>
-        <skipITs>false</skipITs>
+        <skipITs>true</skipITs>
         <!-- java settings version -->
         <java.version>1.8</java.version>
         <lombok.version>1.16.4</lombok.version>
@@ -32,6 +32,7 @@
         <rest-assurred.version>2.4.1</rest-assurred.version>
         <spring-fox.version>2.0.3</spring-fox.version>
         <mysql-connector.version>5.1.37</mysql-connector.version>
+        <postgresql-connector.version>9.4-1203-jdbc42</postgresql-connector.version>
         <serenity.version>1.1.31</serenity.version>
         <threadCount.uitest>12</threadCount.uitest>
         <webdriver.driver>firefox</webdriver.driver>
@@ -111,6 +112,13 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql-connector.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>${postgresql-connector.version}</version>
             <scope>runtime</scope>
         </dependency>
         <!-- tag::spring-devtools[] -->
@@ -418,6 +426,7 @@
         <profile>
             <id>docker</id>
             <properties>
+                <skipITs>false</skipITs>
                 <webdriver.base.url>http://localhost:${server.port}/</webdriver.base.url>
             </properties>
             <build>
@@ -495,7 +504,9 @@
         <repository>
             <id>spring-snapshots</id>
             <url>http://repo.spring.io/snapshot</url>
-            <snapshots><enabled>true</enabled></snapshots>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
         </repository>
         <repository>
             <id>spring-milestones</id>
