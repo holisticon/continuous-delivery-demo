@@ -2,6 +2,8 @@
 [![Build Status](https://travis-ci.org/holisticon/continous-delivery-demo.svg?branch=master)](https://travis-ci.org/holisticon/continous-delivery-demo) [![Build Status](https://server.holisticon.de/jenkins/buildStatus/icon?job=Public/ContinousDelivery_Demo)](https://server.holisticon.de/jenkins/job/Public/job/ContinousDelivery_Demo)
 ## Development-Setup
 
+[](https://continousdelivery.herokuapp.com)
+
 ### Setup
 
 * Install JDK 8+ and Maven 3.3+
@@ -63,3 +65,10 @@ API is available at [](http://localhost:9080/swagger-ui.html)
 ```bash
 $ mvn -Pdocker spring-boot:run
 ```
+
+
+### Deployment
+
+#### Heroku
+
+For more details about Heroku Deployment, see [this blogpost](https://blog.codecentric.de/2015/10/spring-boot-anwendungen-bei-heroku-deployen/)
