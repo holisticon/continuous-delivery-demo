@@ -4,6 +4,8 @@
 
 ## Development-Setup
 
+REST-API is created with Swagger, see [here](https://continousdelivery.herokuapp.com/swagger-ui.html)
+
 ### Setup
 
 * Install JDK 8+ and Maven 3.3+
