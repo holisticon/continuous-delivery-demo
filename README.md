@@ -2,6 +2,8 @@
 [![Build Status](https://travis-ci.org/holisticon/continous-delivery-demo.svg?branch=master)](https://travis-ci.org/holisticon/continous-delivery-demo) [![Build Status](https://server.holisticon.de/jenkins/buildStatus/icon?job=Public/ContinousDelivery_Demo)](https://server.holisticon.de/jenkins/job/Public/job/ContinousDelivery_Demo)
 ## Development-Setup
 
+REST-API is created with Swagger, see [here](https://continousdelivery.herokuapp.com/swagger-ui.html)
+
 ### Setup
 
 * Install JDK 8+ and Maven 3.3+
