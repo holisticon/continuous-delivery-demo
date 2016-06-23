@@ -46,7 +46,7 @@
     "karma-junit-reporter": "0.3.1",
     "karma-phantomjs-launcher": "*",
     "load-grunt-tasks": "3.1.0",
-    "node-sass": "2.1.1",
+    "node-sass-prebuilt": "3.7.1",
     "phantomjs": "1.9.17",
     "serve-static": "1.10.0",
     "time-grunt": "1.0.0",
@@ -57,7 +57,7 @@
     "node": ">= 4.2.x"
   },
   "scripts": {
-    "postinstall": "bower install && npm rebuild node-sass && grunt build",
+    "postinstall": "bower install",
     "start": "npm install && grunt serve",
     "test": "grunt check && grunt test"
   }
