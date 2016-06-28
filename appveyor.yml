@@ -1,4 +1,11 @@
+# Set build version format here instead of in the admin panel.
 version: '{build}'
+# Fix line endings in Windows. (runs before repo cloning)
+init:
+  - git config --global core.autocrlf input
+# Finish on first failed build
+matrix:
+  fast_finish: true
 skip_tags: true
 clone_depth: 10
 environment:
@@ -15,11 +22,13 @@ install:
         (new-object System.Net.WebClient).DownloadFile('http://www.us.apache.org/dist/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.zip', 'C:\maven-bin.zip')
         [System.IO.Compression.ZipFile]::ExtractToDirectory("C:\maven-bin.zip", "C:\maven")
       }
-  - cmd: SET PATH=C:\maven\apache-maven-3.3.9\bin;%JAVA_HOME%\bin;%PATH
+  - cmd: SET PATH=C:\maven\apache-maven-3.3.9\bin;%JAVA_HOME%\bin;%PATH%
   - cmd: SET MAVEN_OPTS=-XX:MaxPermSize=2g -Xmx4g
   - cmd: SET JAVA_OPTS=-XX:MaxPermSize=2g -Xmx4g
+  - cmd: echo %PATH%
   - cmd: mvn --version
   - cmd: java -version
+  - cmd: git --version && svn --version
 build_script:
   - mvn clean package -B -Dmaven.test.skip=true
 test_script:
