@@ -48,6 +48,7 @@
     "load-grunt-tasks": "3.1.0",
     "node-sass-prebuilt": "3.7.1",
     "phantomjs": "1.9.17",
+    "node-sass": "2.1.1",
     "serve-static": "1.10.0",
     "time-grunt": "1.0.0",
     "vinyl-fs": "2.4.2"

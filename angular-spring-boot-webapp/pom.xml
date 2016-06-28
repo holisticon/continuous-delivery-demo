@@ -35,18 +35,21 @@
         <serenity.version>1.1.31</serenity.version>
         <threadCount.uitest>12</threadCount.uitest>
         <webdriver.driver>firefox</webdriver.driver>
+
         <!-- testing config -->
         <server.port>41180</server.port>
         <mysql.port>33306</mysql.port>
         <webdriver.base.url>http://localhost:9080/</webdriver.base.url>
+
         <!-- frontend dependendies -->
-        <node.version>v4.4.4</node.version>
-        <npm.version>2.14.12</npm.version>
+        <node.version>v4.4.3</node.version>
+        <npm.version>3.9.5</npm.version>
+
         <!-- Maven Plugins -->
         <sql-maven-plugin.version>1.5</sql-maven-plugin.version>
         <flyway-maven-plugin.version>3.2.1</flyway-maven-plugin.version>
         <docker-maven-plugin.version>2.11.4</docker-maven-plugin.version>
-        <frontend-maven-plugin.version>0.0.25</frontend-maven-plugin.version>
+        <frontend-maven-plugin.version>1.0</frontend-maven-plugin.version>
     </properties>
 
     <dependencies>
