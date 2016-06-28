@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/holisticon/continuous-delivery-demo.svg?branch=master)](https://travis-ci.org/holisticon/continuous-delivery-demo) 
 [![Build status](https://ci.appveyor.com/api/projects/status/3yvah64er29s9oni?svg=true)](https://ci.appveyor.com/project/hypery2k/continuous-delivery-demo)
 [![Build Status](https://server.holisticon.de/jenkins/buildStatus/icon?job=Public/ContinuousDelivery_Demo)](https://server.holisticon.de/jenkins/job/Public/job/ContinuousDelivery_Demo) 
-[![Build Status](https://server.holisticon.de/jenkins/buildStatus/icon?job=Public/ContinousDelivery_BranchDemo/master)](https://server.holisticon.de/jenkins/job/Public/ContinousDelivery_BranchDemo)
+[![Build Status](https://server.holisticon.de/jenkins/buildStatus/icon?job=Public/ContinousDelivery_BranchDemo/master)](https://server.holisticon.de/jenkins/job/Public/job/ContinousDelivery_BranchDemo/)
 
 ## Development-Setup
 
