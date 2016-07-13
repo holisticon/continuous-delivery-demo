@@ -217,6 +217,15 @@
                         <phase>generate-resources</phase>
                     </execution>
                     <execution>
+                        <id>npm build</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>run build</arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
                         <id>javascript unit tests</id>
                         <goals>
                             <goal>grunt</goal>

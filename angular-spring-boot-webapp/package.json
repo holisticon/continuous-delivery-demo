@@ -60,6 +60,7 @@
   },
   "scripts": {
     "postinstall": "bower install",
+    "build": "grunt build",
     "start": "npm install && grunt serve",
     "test": "grunt check && grunt test"
   }
