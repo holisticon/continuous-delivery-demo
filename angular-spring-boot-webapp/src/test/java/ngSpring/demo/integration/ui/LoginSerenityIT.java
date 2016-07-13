@@ -39,10 +39,6 @@ public class LoginSerenityIT extends AbstractSerenityITTestBase {
     @Issues(value = {"#9"})
     public void loginShouldWork() {
         loginSteps.performLogin(this.username, this.password);
-        if (fail) {
-            loginSteps.userShouldSeeAnErrorMessage();
-        } else {
-            loginSteps.userShouldSeeNoErrorMessage();
-        }
+        loginSteps.userShouldSeeNoErrorMessage();
     }
 }
