@@ -2,9 +2,8 @@
 
 [![Build Status](https://travis-ci.org/holisticon/continuous-delivery-demo.svg?branch=master)](https://travis-ci.org/holisticon/continuous-delivery-demo) 
 [![Build status](https://ci.appveyor.com/api/projects/status/3yvah64er29s9oni?svg=true)](https://ci.appveyor.com/project/hypery2k/continuous-delivery-demo)
-[![Build Status](https://server.holisticon.de/jenkins/buildStatus/icon?job=Public/ContinuousDelivery_Demo)](https://server.holisticon.de/jenkins/job/Public/job/ContinuousDelivery_Demo) 
-[![Build Status](https://server.holisticon.de/jenkins/buildStatus/icon?job=Public/ContinousDelivery_BranchDemo/master)](https://server.holisticon.de/jenkins/job/Public/job/ContinousDelivery_BranchDemo/)
-
+[![Build Status](https://dev.holisticon.de/jenkins/buildStatus/icon?job=Public/ContinuousDelivery_Demo)](https://dev.holisticon.de/jenkins/blue/organizations/jenkins/Public%2FContinuousDelivery_Demo/activity/)
+[![Build Status](https://dev.holisticon.de/jenkins/buildStatus/icon?job=Public/2FContinousDelivery_BranchDemo)](https://dev.holisticon.de/jenkins/blue/organizations/jenkins/Public%2FContinousDelivery_BranchDemo/activity/)
 ## Development-Setup
 
 REST-API is created with Swagger, see [here](https://continousdelivery.herokuapp.com/swagger-ui.html)
