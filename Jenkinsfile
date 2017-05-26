@@ -45,6 +45,8 @@ timeout(60) {
       stage('Integration-Tests') {
         node('mac') {
           env.JAVA_HOME = '/Library/Java/JavaVirtualMachines/jdk1.8.0_25.jdk/Contents/Home/jre'
+
+          checkout scm
           sh "mvn -Pdocker -Ddocker.host=http://127.0.0.1:2375  clean verify -Dmaven.test.failure.ignore"
           step([
             $class     : 'ArtifactArchiver',
