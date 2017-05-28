@@ -48,7 +48,7 @@
     <!-- Maven Plugins -->
     <sql-maven-plugin.version>1.5</sql-maven-plugin.version>
     <flyway-maven-plugin.version>3.2.1</flyway-maven-plugin.version>
-    <docker-maven-plugin.version>2.11.4</docker-maven-plugin.version>
+    <docker-maven-plugin.version>2.11.23</docker-maven-plugin.version>
     <frontend-maven-plugin.version>1.0</frontend-maven-plugin.version>
   </properties>
 
@@ -442,13 +442,11 @@
               <!-- (optional) do/do not cache images (default false), disable to
                   get the freshest images -->
               <cache>true</cache>
-
             </configuration>
             <executions>
               <execution>
                 <id>docker-prepare</id>
                 <goals>
-                  <goal>clean</goal>
                   <goal>package</goal>
                   <goal>start</goal>
                 </goals>
@@ -458,6 +456,7 @@
                 <id>docker-cleanup</id>
                 <goals>
                   <goal>stop</goal>
+                  <goal>clean</goal>
                 </goals>
                 <phase>post-integration-test</phase>
               </execution>
