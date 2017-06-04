@@ -19,7 +19,7 @@ import org.junit.runner.RunWith;
 @Narrative(text = "Login")
 @RunWith(SerenityParameterizedRunner.class)
 @UseTestDataFrom(value = "testdata/login.csv")
-public class LoginSerenityIT extends AbstractSerenityITTestBase {
+public class LoginIT extends AbstractSerenityITTestBase {
 
   @Steps
   public LoginSteps loginSteps;

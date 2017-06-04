@@ -337,7 +337,7 @@
               <argLine>${failsafeArgLine}</argLine>
               <skipTests>${skipITs}</skipTests>
               <includes>
-                <include>**/*SerenityIT.class</include>
+                <include>**/*IT.class</include>
               </includes>
               <threadCount>${threadCount.uitest}</threadCount>
               <parallel>classes</parallel>

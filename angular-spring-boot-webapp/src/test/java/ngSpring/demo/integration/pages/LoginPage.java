@@ -8,13 +8,16 @@ import org.openqa.selenium.WebElement;
 /**
  * @author mreinhardt
  */
-// tag::serenity-ui-test[]
 @DefaultUrl("http://localhost:9000/login")
+// tag::serenity-ui-test[]
 public class LoginPage extends CmsPage {
+    // end::serenity-ui-test[]
 
     public LoginPage(WebDriver driver) {
         super(driver);
     }
+
+    // tag::serenity-ui-test[]
 
     @FindBy(id = "username")
     private WebElement userInput;

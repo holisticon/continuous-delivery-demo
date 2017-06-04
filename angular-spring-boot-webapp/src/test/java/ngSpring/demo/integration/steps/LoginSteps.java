@@ -13,6 +13,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
  */
 // tag::serenity-ui-test[]
 public class LoginSteps extends ScenarioSteps {
+    // tag::serenity-ui-test[]
 
     private static final long serialVersionUID = -566491664850250304L;
 
@@ -20,14 +21,13 @@ public class LoginSteps extends ScenarioSteps {
         super(pages);
     }
 
+    // end::serenity-ui-test[]
     // PAGES
-
     public LoginPage loginPage() {
         return getPages().currentPageAt(LoginPage.class);
     }
 
     // STEPS
-
     @Step
     public void inputUsername(String user) {
         loginPage().inputUserName(user);
@@ -61,10 +61,12 @@ public class LoginSteps extends ScenarioSteps {
         assertThat("There should be an error message ", loginPage().errorMessageIsVisible());
         assertThat("There should be only one info message ", loginPage().onlyOneErrorMessageIsVisible());
     }
+    // end::serenity-ui-test[]
 
     @Step
     public void userShouldSeeNoErrorMessage() {
         assertThat("There should be no error message ", !loginPage().errorMessageIsVisible());
     }
+    // tag::serenity-ui-test[]
 }
 // end::serenity-ui-test[]

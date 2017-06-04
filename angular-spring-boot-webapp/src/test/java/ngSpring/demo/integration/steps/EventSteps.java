@@ -20,7 +20,6 @@ public class EventSteps {
   public SystemPropertiesConfiguration systemPropertiesConfiguration;
   // tag::serenity-rest-test[]
 
-
   @StepGroup
   public Response getEvent(String username, String password, String eventId) {
     return RestAssured.given()
