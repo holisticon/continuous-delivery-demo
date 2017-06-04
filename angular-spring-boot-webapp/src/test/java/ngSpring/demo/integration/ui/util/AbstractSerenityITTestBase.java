@@ -1,20 +1,25 @@
 package ngSpring.demo.integration.ui.util;
 
-import net.serenitybdd.junit.runners.SerenityRunner;
 import net.thucydides.core.annotations.Managed;
 import net.thucydides.core.annotations.ManagedPages;
 import net.thucydides.core.pages.Pages;
-import net.thucydides.junit.annotations.Concurrent;
-import org.junit.runner.RunWith;
+import org.junit.Before;
 import org.openqa.selenium.WebDriver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-@Concurrent
-@RunWith(SerenityRunner.class)
 public abstract class AbstractSerenityITTestBase {
 
-    @Managed
-    public WebDriver webdriver;
+  private static final Logger LOGGER = LoggerFactory.getLogger(AbstractSerenityITTestBase.class);
 
-    @ManagedPages
-    public Pages pages;
+  @Managed
+  public WebDriver webdriver;
+
+  @ManagedPages
+  public Pages pages;
+
+  @Before
+  public void setup() {
+    LOGGER.debug("Going to use driver " + webdriver.toString());
+  }
 }
