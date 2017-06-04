@@ -395,35 +395,6 @@
   </build>
   <profiles>
     <profile>
-      <id>mac</id>
-      <activation>
-        <os>
-          <family>mac</family>
-        </os>
-      </activation>
-      <build>
-        <pluginManagement>
-          <plugins>
-            <!-- tag::docker-mac-maven-plugin[] -->
-            <plugin>
-              <groupId>com.alexecollins.docker</groupId>
-              <artifactId>docker-maven-plugin</artifactId>
-              <version>${docker-maven-plugin.version}</version>
-              <dependencies>
-                <dependency>
-                  <!-- set-up port forwarding if you're using boot2docker -->
-                  <groupId>com.alexecollins.docker</groupId>
-                  <artifactId>docker-java-orchestration-plugin-boot2docker</artifactId>
-                  <version>${docker-maven-plugin.version}</version>
-                </dependency>
-              </dependencies>
-            </plugin>
-            <!-- end::docker-mac-maven-plugin[] -->
-          </plugins>
-        </pluginManagement>
-      </build>
-    </profile>
-    <profile>
       <id>docker</id>
       <properties>
         <skipITs>false</skipITs>
@@ -436,7 +407,6 @@
             <groupId>com.alexecollins.docker</groupId>
             <artifactId>docker-maven-plugin</artifactId>
             <configuration>
-              <prefix>ngspring</prefix>
               <!-- (optional) remove images created by Dockerfile (default true) -->
               <removeIntermediateImages>true</removeIntermediateImages>
               <!-- (optional) do/do not cache images (default false), disable to
@@ -479,7 +449,7 @@
               <url><![CDATA[jdbc:mysql://localhost:${mysql.port}/NGSPRING?useUnicode=true&characterEncoding=utf8]]></url>
               <username>ngspring</username>
               <password>password</password>
-            <!-- @formatter:on -->
+              <!-- @formatter:on -->
             </configuration>
             <executions>
               <execution>

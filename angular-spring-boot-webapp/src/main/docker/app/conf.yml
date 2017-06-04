@@ -15,4 +15,4 @@ links:
 # how long in milliseconds to sleep after start-up (default 0)
 sleep: 5000
 # tag to use for images
-tag: ngspring/app:${project.version}
+tag: ngspring/${project.artifactId}-app:${project.version}
