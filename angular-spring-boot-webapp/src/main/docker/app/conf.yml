@@ -9,7 +9,7 @@ ports:
 healthChecks:
   pings:
     - url: http://localhost:${server.port}/
-      timeout: 60000
+      timeout: 120000
 links:
   - mysql:db
 # how long in milliseconds to sleep after start-up (default 0)

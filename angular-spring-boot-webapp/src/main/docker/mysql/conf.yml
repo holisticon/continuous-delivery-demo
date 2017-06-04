@@ -1,3 +1,5 @@
 ports:
   - ${mysql.port} 3306
 tag: ngspring/${project.artifactId}-db:${project.version}
+# how long in milliseconds to sleep after start-up (default 0)
+sleep: 10000

@@ -421,20 +421,13 @@
             </configuration>
             <executions>
               <execution>
-                <id>docker-prepare</id>
                 <goals>
+                  <goal>stop</goal>
+                  <goal>clean</goal>
                   <goal>package</goal>
                   <goal>start</goal>
                 </goals>
                 <phase>package</phase>
-              </execution>
-              <execution>
-                <id>docker-cleanup</id>
-                <goals>
-                  <goal>stop</goal>
-                  <goal>clean</goal>
-                </goals>
-                <phase>post-integration-test</phase>
               </execution>
             </executions>
           </plugin>
