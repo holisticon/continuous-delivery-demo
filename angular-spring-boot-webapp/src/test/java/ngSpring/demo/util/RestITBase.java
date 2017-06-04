@@ -26,7 +26,7 @@ import java.util.Map;
 
 import static com.jayway.restassured.RestAssured.given;
 
-@RunWith(SerenityRunner.class)
+@RunWith(SpringJUnit4ClassRunner.class)
 @ActiveProfiles("test")
 @SpringApplicationConfiguration(classes = AngularSpringApplication.class)
 @WebAppConfiguration
