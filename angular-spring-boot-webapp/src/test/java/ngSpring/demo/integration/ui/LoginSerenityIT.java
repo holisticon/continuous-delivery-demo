@@ -4,7 +4,7 @@ import net.serenitybdd.junit.runners.SerenityParameterizedRunner;
 import net.thucydides.core.annotations.*;
 import net.thucydides.junit.annotations.Qualifier;
 import net.thucydides.junit.annotations.UseTestDataFrom;
-import ngSpring.demo.integration.ui.steps.LoginSteps;
+import ngSpring.demo.integration.steps.LoginSteps;
 import ngSpring.demo.integration.ui.util.AbstractSerenityITTestBase;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,6 +12,7 @@ import org.junit.runner.RunWith;
 /**
  * @author mreinhardt
  */
+// tag::serenity-ui-test[]
 @WithTags({
   @WithTag(type = "epic", name = "User management")
 })
@@ -48,3 +49,4 @@ public class LoginSerenityIT extends AbstractSerenityITTestBase {
     loginSteps.userShouldSeeNoErrorMessage();
   }
 }
+// end::serenity-ui-test[]

@@ -3,6 +3,7 @@ package ngSpring.demo.util;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.specification.RequestSpecification;
+import net.serenitybdd.junit.runners.SerenityRunner;
 import ngSpring.demo.AngularSpringApplication;
 import ngSpring.demo.domain.entities.User;
 import ngSpring.demo.repositories.EventRepository;
@@ -25,7 +26,7 @@ import java.util.Map;
 
 import static com.jayway.restassured.RestAssured.given;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+@RunWith(SerenityRunner.class)
 @ActiveProfiles("test")
 @SpringApplicationConfiguration(classes = AngularSpringApplication.class)
 @WebAppConfiguration

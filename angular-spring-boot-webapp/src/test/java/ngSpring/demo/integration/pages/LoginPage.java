@@ -1,4 +1,4 @@
-package ngSpring.demo.integration.ui.pages;
+package ngSpring.demo.integration.pages;
 
 import net.serenitybdd.core.annotations.findby.FindBy;
 import net.thucydides.core.annotations.DefaultUrl;
@@ -8,7 +8,7 @@ import org.openqa.selenium.WebElement;
 /**
  * @author mreinhardt
  */
-
+// tag::serenity-ui-test[]
 @DefaultUrl("http://localhost:9000/login")
 public class LoginPage extends CmsPage {
 
@@ -42,3 +42,4 @@ public class LoginPage extends CmsPage {
         return element(userInput).isCurrentlyVisible() && element(passwordInput).isCurrentlyVisible();
     }
 }
+// end::serenity-ui-test[]

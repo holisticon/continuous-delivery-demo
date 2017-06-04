@@ -32,9 +32,10 @@ import java.util.List;
 @RequestMapping(value = "/api/events")
 @ResponseStatus(HttpStatus.OK)
 public class EventController {
+
 //end::events-rest-api[]
 
-    @Autowired
+  @Autowired
     private EventTransformer eventTransformer;
 
     @Autowired

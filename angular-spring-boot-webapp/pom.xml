@@ -33,6 +33,7 @@
     <mysql-connector.version>5.1.37</mysql-connector.version>
     <junit.version>4.12</junit.version>
     <serenity.version>1.2.2</serenity.version>
+    <groovy-json.version>2.4.8</groovy-json.version>
     <threadCount.uitest>12</threadCount.uitest>
     <webdriver.driver>firefox</webdriver.driver>
 
@@ -157,6 +158,16 @@
       <artifactId>junit</artifactId>
       <version>${junit.version}</version>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.codehaus.groovy</groupId>
+      <artifactId>groovy-json</artifactId>
+      <version>${groovy-json.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.codehaus.groovy</groupId>
+      <artifactId>groovy-xml</artifactId>
+      <version>${groovy-json.version}</version>
     </dependency>
     <!-- tag::serenity-include[] -->
     <dependency>

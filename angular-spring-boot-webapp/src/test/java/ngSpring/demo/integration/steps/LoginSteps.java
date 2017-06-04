@@ -1,16 +1,17 @@
-package ngSpring.demo.integration.ui.steps;
+package ngSpring.demo.integration.steps;
 
 import net.thucydides.core.annotations.Step;
 import net.thucydides.core.annotations.StepGroup;
 import net.thucydides.core.pages.Pages;
 import net.thucydides.core.steps.ScenarioSteps;
-import ngSpring.demo.integration.ui.pages.LoginPage;
+import ngSpring.demo.integration.pages.LoginPage;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
  * @author mreinhardt
  */
+// tag::serenity-ui-test[]
 public class LoginSteps extends ScenarioSteps {
 
     private static final long serialVersionUID = -566491664850250304L;
@@ -66,3 +67,4 @@ public class LoginSteps extends ScenarioSteps {
         assertThat("There should be no error message ", !loginPage().errorMessageIsVisible());
     }
 }
+// end::serenity-ui-test[]

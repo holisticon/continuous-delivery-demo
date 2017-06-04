@@ -1,4 +1,4 @@
-package ngSpring.demo.integration.ui.pages;
+package ngSpring.demo.integration.pages;
 
 import net.serenitybdd.core.annotations.findby.FindBy;
 import net.serenitybdd.core.pages.PageObject;
