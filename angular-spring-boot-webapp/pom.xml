@@ -43,8 +43,8 @@
     <webdriver.base.url>http://localhost:9080/</webdriver.base.url>
 
     <!-- frontend dependendies -->
-    <node.version>v4.4.3</node.version>
-    <npm.version>3.9.5</npm.version>
+    <node.version>v6.10.3</node.version>
+    <npm.version>3.10.10</npm.version>
 
     <!-- Maven Plugins -->
     <sql-maven-plugin.version>1.5</sql-maven-plugin.version>

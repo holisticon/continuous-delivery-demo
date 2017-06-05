@@ -50,7 +50,7 @@ $ mvn spring-boot:run -Dspring.datasource.url=jdbc:mysql://127.0.0.1:3306/NGSPRI
 #### Setup
 
 * Install [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
-* Install NodeJS and npm (http://nodejs.org/download/)
+* Install NodeJS 6 and npm 3 (http://nodejs.org/download/)
 * Install [docker](http://docs.docker.com) (optional)
 
 Run maven
