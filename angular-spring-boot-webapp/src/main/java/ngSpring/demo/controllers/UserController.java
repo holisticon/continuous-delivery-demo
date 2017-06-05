@@ -29,110 +29,110 @@ import java.util.List;
 @RequestMapping(value = "/api/user")
 public class UserController {
 
-    @Autowired
-    UserRepository userRepository;
+  @Autowired
+  UserRepository userRepository;
 
-    @Autowired
-    UserProfileTransformer userProfileTransformer;
+  @Autowired
+  UserProfileTransformer userProfileTransformer;
 
 
-    @ApiOperation(value = "Update user details", notes = "Update existing user dataset")
-    @ApiResponses(value = {@ApiResponse(code = 400, message = "Validation errors")})
-    @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Message> postUser(@RequestBody UserProfileDTO userProfileDTO) throws ValidationException {
+  @ApiOperation(value = "Update user details", notes = "Update existing user dataset")
+  @ApiResponses(value = {@ApiResponse(code = 400, message = "Validation errors")})
+  @RequestMapping(method = RequestMethod.POST)
+  public ResponseEntity<Message> postUser(@RequestBody UserProfileDTO userProfileDTO) throws ValidationException {
 
-        User loggedInUser = checkUser();
-        validateUserProfileDto(userProfileDTO);
-        User newUser = this.userProfileTransformer.transformToEntity(userProfileDTO);
+    User loggedInUser = checkUser();
+    validateUserProfileDto(userProfileDTO);
+    User newUser = this.userProfileTransformer.transformToEntity(userProfileDTO);
 
-        newUser.setEnabled(true);
-        this.userRepository.save(newUser);
-        return new ResponseEntity<Message>(new Message("The user has been properly created."), HttpStatus.OK);
+    newUser.setEnabled(true);
+    this.userRepository.save(newUser);
+    return new ResponseEntity<Message>(new Message("The user has been properly created."), HttpStatus.OK);
+  }
+
+  @RequestMapping(value = "/{userId}", method = RequestMethod.PUT)
+  public ResponseEntity<Message> putUser(@PathVariable String userId, @RequestBody UserProfileDTO userProfileDTO) throws ValidationException, EntityNotFoundException {
+
+    User loggedInUser = checkUser();
+    validateUserProfileDto(userProfileDTO);
+    User currentUser = this.userRepository.findByUserIdAndDeletedFalse(userId);
+    if (currentUser == null) {
+      throw new EntityNotFoundException();
+    }
+    User updatedUser = this.userProfileTransformer.transformToEntity(userProfileDTO);
+    updatedUser.setEnabled(currentUser.isEnabled());
+    updatedUser.setInsertDate(currentUser.getInsertDate());
+    this.userRepository.save(updatedUser);
+    return new ResponseEntity<Message>(new Message("The user has been properly updated."), HttpStatus.OK);
+  }
+
+  @RequestMapping(value = "/{userId}", method = RequestMethod.DELETE)
+  public ResponseEntity<Message> deleteUser(@PathVariable String userId) throws EntityNotFoundException {
+    User loggedInUser = checkUser();
+    User toBeDeleted = this.userRepository.findByUserIdAndDeletedFalse(userId);
+
+    if (toBeDeleted == null) {
+      throw new EntityNotFoundException();
     }
 
-    @RequestMapping(value = "/{userId}", method = RequestMethod.PUT)
-    public ResponseEntity<Message> putUser(@PathVariable String userId, @RequestBody UserProfileDTO userProfileDTO) throws ValidationException, EntityNotFoundException {
+    this.userRepository.save(toBeDeleted);
+    return new ResponseEntity<Message>(new Message("The user has been properly deleted."), HttpStatus.OK);
+  }
 
-        User loggedInUser = checkUser();
-        validateUserProfileDto(userProfileDTO);
-        User currentUser = this.userRepository.findByUserIdAndDeletedFalse(userId);
-        if (currentUser == null) {
-            throw new EntityNotFoundException();
-        }
-        User updatedUser = this.userProfileTransformer.transformToEntity(userProfileDTO);
-        updatedUser.setEnabled(currentUser.isEnabled());
-        updatedUser.setInsertDate(currentUser.getInsertDate());
-        this.userRepository.save(updatedUser);
-        return new ResponseEntity<Message>(new Message("The user has been properly updated."), HttpStatus.OK);
+  @RequestMapping(value = "/changePassword", method = RequestMethod.PUT)
+  public ResponseEntity<Message> changePassword(@RequestBody UserProfileDTO dto) throws ValidationException {
+    User loggedInUser = checkUser();
+    validateUserProfileDto(dto);
+    if (loggedInUser.getUserId() == dto.getUserId()) {
+      User updatedUser = this.userProfileTransformer.transformToEntity(dto);
+      this.userRepository.save(updatedUser);
+    } else {
+      throw new AccessDeniedException("Not allowed");
     }
+    return new ResponseEntity<Message>(new Message("The password has been properly changed."), HttpStatus.OK);
+  }
 
-    @RequestMapping(value = "/{userId}", method = RequestMethod.DELETE)
-    public ResponseEntity<Message> deleteUser(@PathVariable String userId) throws EntityNotFoundException {
-        User loggedInUser = checkUser();
-        User toBeDeleted = this.userRepository.findByUserIdAndDeletedFalse(userId);
-
-        if (toBeDeleted == null) {
-            throw new EntityNotFoundException();
-        }
-
-        this.userRepository.save(toBeDeleted);
-        return new ResponseEntity<Message>(new Message("The user has been properly deleted."), HttpStatus.OK);
+  @RequestMapping(value = "/controller/{customerId}", method = RequestMethod.GET)
+  public ResponseEntity<UserProfileDTO> getControllerByCustomerId(@PathVariable String customerId) throws EntityNotFoundException {
+    String userName = this.userRepository.findControllerUserNameByCustomerId(customerId);
+    User user = this.userRepository.findByUsernameAndDeletedFalse(userName);
+    if (user == null) {
+      throw new EntityNotFoundException();
     }
+    UserProfileDTO userProfileDTO = this.userProfileTransformer.transformToDTO(user);
+    return new ResponseEntity<UserProfileDTO>(userProfileDTO, HttpStatus.OK);
+  }
 
-    @RequestMapping(value = "/changePassword", method = RequestMethod.PUT)
-    public ResponseEntity<Message> changePassword(@RequestBody UserProfileDTO dto) throws ValidationException {
-        User loggedInUser = checkUser();
-        validateUserProfileDto(dto);
-        if (loggedInUser.getUserId() == dto.getUserId()) {
-            User updatedUser = this.userProfileTransformer.transformToEntity(dto);
-            this.userRepository.save(updatedUser);
-        } else {
-            throw new AccessDeniedException("Not allowed");
-        }
-        return new ResponseEntity<Message>(new Message("The password has been properly changed."), HttpStatus.OK);
+  @RequestMapping(value = "/planer/{branchId}", method = RequestMethod.GET)
+  public ResponseEntity<UserProfileDTO> getPlanerByBranchId(@PathVariable String branchId) throws EntityNotFoundException {
+    String userName = this.userRepository.findPlanerUserNameByBranchId(branchId);
+    User user = this.userRepository.findByUsernameAndDeletedFalse(userName);
+    if (user == null) {
+      throw new EntityNotFoundException();
     }
+    UserProfileDTO userProfileDTO = this.userProfileTransformer.transformToDTO(user);
+    return new ResponseEntity<UserProfileDTO>(userProfileDTO, HttpStatus.OK);
+  }
 
-    @RequestMapping(value = "/controller/{customerId}", method = RequestMethod.GET)
-    public ResponseEntity<UserProfileDTO> getControllerByCustomerId(@PathVariable String customerId) throws EntityNotFoundException {
-        String userName = this.userRepository.findControllerUserNameByCustomerId(customerId);
-        User user = this.userRepository.findByUsernameAndDeletedFalse(userName);
-        if (user == null) {
-            throw new EntityNotFoundException();
-        }
-        UserProfileDTO userProfileDTO = this.userProfileTransformer.transformToDTO(user);
-        return new ResponseEntity<UserProfileDTO>(userProfileDTO, HttpStatus.OK);
+  private User checkUser() {
+    Principal principal = SecurityContextHolder.getContext().getAuthentication();
+    if (principal != null) {
+      return userRepository.findByUsernameAndDeletedFalse(principal.getName());
+    } else {
+      throw new AccessDeniedException("Not logged in.");
     }
+  }
 
-    @RequestMapping(value = "/planer/{branchId}", method = RequestMethod.GET)
-    public ResponseEntity<UserProfileDTO> getPlanerByBranchId(@PathVariable String branchId) throws EntityNotFoundException {
-        String userName = this.userRepository.findPlanerUserNameByBranchId(branchId);
-        User user = this.userRepository.findByUsernameAndDeletedFalse(userName);
-        if (user == null) {
-            throw new EntityNotFoundException();
-        }
-        UserProfileDTO userProfileDTO = this.userProfileTransformer.transformToDTO(user);
-        return new ResponseEntity<UserProfileDTO>(userProfileDTO, HttpStatus.OK);
+
+  private void validateUserProfileDto(UserProfileDTO dto) throws ValidationException {
+    // check password
+    if (dto.getUserId() == null && !StringUtils.pathEquals(dto.getPassword(), dto.getPasswordConfirmation())) {
+      List<ValidationMessage> validationMessages = new ArrayList<>();
+      validationMessages.add(ValidationMessage.builder()
+        .entity(dto.getUsername())
+        .messageTemplate("validation.passwords_not_match")
+        .build());
+      throw new ValidationException("", validationMessages);
     }
-
-    private User checkUser() {
-        Principal principal = SecurityContextHolder.getContext().getAuthentication();
-        if (principal != null) {
-            return userRepository.findByUsernameAndDeletedFalse(principal.getName());
-        } else {
-            throw new AccessDeniedException("Not logged in.");
-        }
-    }
-
-
-    private void validateUserProfileDto(UserProfileDTO dto) throws ValidationException {
-        // check password
-        if (dto.getUserId() == null && !StringUtils.pathEquals(dto.getPassword(), dto.getPasswordConfirmation())) {
-            List<ValidationMessage> validationMessages = new ArrayList<>();
-            validationMessages.add(ValidationMessage.builder()
-                    .entity(dto.getUsername())
-                    .messageTemplate("validation.passwords_not_match")
-                    .build());
-            throw new ValidationException("", validationMessages);
-        }
-    }
+  }
 }

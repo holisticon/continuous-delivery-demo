@@ -10,7 +10,7 @@ import ngSpring.demo.repositories.EventRepository;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -30,54 +30,54 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ActiveProfiles("test")
-@SpringApplicationConfiguration(classes = AngularSpringApplication.class)
+@SpringBootTest(classes = AngularSpringApplication.class)
 @WebAppConfiguration
 public abstract class MockedMvcTestBase {
 
-    @Autowired
-    protected WebApplicationContext webApplicationContext;
+  @Autowired
+  protected WebApplicationContext webApplicationContext;
 
-    @Autowired
-    protected EventRepository eventRepository;
+  @Autowired
+  protected EventRepository eventRepository;
 
-    protected MockMvc mockMvc;
+  protected MockMvc mockMvc;
 
-    protected DateFormat dfmt = new SimpleDateFormat("yyyy-MM-dd");
+  protected DateFormat dfmt = new SimpleDateFormat("yyyy-MM-dd");
 
-    protected MediaType contentType = new MediaType(
-            MediaType.APPLICATION_JSON.getType(),
-            MediaType.APPLICATION_JSON.getSubtype(), Charset.forName("utf8"));
+  protected MediaType contentType = new MediaType(
+    MediaType.APPLICATION_JSON.getType(),
+    MediaType.APPLICATION_JSON.getSubtype(), Charset.forName("utf8"));
 
-    @Before
-    public void setup() throws Exception {
-        this.mockMvc = webAppContextSetup(webApplicationContext).build();
-        this.eventRepository.deleteAll();
-    }
+  @Before
+  public void setup() throws Exception {
+    this.mockMvc = webAppContextSetup(webApplicationContext).build();
+    this.eventRepository.deleteAll();
+  }
 
-    protected List<Event> loadEvents() throws ParseException {
-        List<Event> eventList = new ArrayList<Event>();
-        eventList.add(createEvent("Viele neue Preise", dfmt.parse("2015-06-01"), null));
-        eventList.add(createEvent("voll geile Mucke!", dfmt.parse("2014-01-03"), dfmt.parse("2015-02-01")));
-        eventList.add(createEvent("Gedöns", dfmt.parse("2015-01-01"), dfmt.parse("2015-11-01")));
-        return eventList;
-    }
+  protected List<Event> loadEvents() throws ParseException {
+    List<Event> eventList = new ArrayList<Event>();
+    eventList.add(createEvent("Viele neue Preise", dfmt.parse("2015-06-01"), null));
+    eventList.add(createEvent("voll geile Mucke!", dfmt.parse("2014-01-03"), dfmt.parse("2015-02-01")));
+    eventList.add(createEvent("Gedöns", dfmt.parse("2015-01-01"), dfmt.parse("2015-11-01")));
+    return eventList;
+  }
 
-    // ENTITY HELPERS
+  // ENTITY HELPERS
 
-    protected Event createEvent(String eventDescription, Date startDate, Date endDate) {
-        return eventRepository.save(new Event(eventDescription, startDate, endDate));
-    }
+  protected Event createEvent(String eventDescription, Date startDate, Date endDate) {
+    return eventRepository.save(new Event(eventDescription, startDate, endDate));
+  }
 
-    // HELPER
+  // HELPER
 
-    protected String createJSON(Object object) throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-        SimpleDateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy");
-        mapper.configure(SerializationFeature.INDENT_OUTPUT, true);
-        mapper.configure(SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS, true);
-        mapper.setDateFormat(outputFormat);
-        mapper.setSerializationInclusion(Include.NON_EMPTY);
-        return mapper.writeValueAsString(object);
-    }
+  protected String createJSON(Object object) throws JsonProcessingException {
+    ObjectMapper mapper = new ObjectMapper();
+    SimpleDateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy");
+    mapper.configure(SerializationFeature.INDENT_OUTPUT, true);
+    mapper.configure(SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS, true);
+    mapper.setDateFormat(outputFormat);
+    mapper.setSerializationInclusion(Include.NON_EMPTY);
+    return mapper.writeValueAsString(object);
+  }
 
 }
