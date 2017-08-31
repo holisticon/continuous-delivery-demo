@@ -7,13 +7,13 @@
 
   <name>angular-spring-boot-webapp</name>
   <description>Demo project for Spring Boot</description>
-  <version>0.3.0-SNAPSHOT</version>
+  <version>0.2.0-SNAPSHOT</version>
 
   <!--tag::maven-springboot-include[] -->
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>1.5.3.RELEASE</version>
+    <version>1.3.5.RELEASE</version>
     <relativePath/>
     <!-- lookup parent from repository -->
   </parent>
@@ -29,7 +29,7 @@
     <commons-codec.version>1.10</commons-codec.version>
     <commons-csv.version>1.1</commons-csv.version>
     <commons-io.version>1.3.2</commons-io.version>
-    <spring-fox.version>2.7.1-SNAPSHOT</spring-fox.version>
+    <spring-fox.version>2.0.3</spring-fox.version>
     <mysql-connector.version>5.1.37</mysql-connector.version>
     <junit.version>4.12</junit.version>
     <serenity.version>1.2.2</serenity.version>
@@ -42,14 +42,14 @@
     <mysql.port>33306</mysql.port>
     <webdriver.base.url>http://localhost:9080/</webdriver.base.url>
 
-    <!-- frontend dependendies -->
-    <node.version>v6.10.3</node.version>
+    <!-- frontend dependencies -->
+    <node.version>v6.11.1</node.version>
     <npm.version>3.10.10</npm.version>
 
     <!-- Maven Plugins -->
     <sql-maven-plugin.version>1.5</sql-maven-plugin.version>
     <flyway-maven-plugin.version>3.2.1</flyway-maven-plugin.version>
-    <docker-maven-plugin.version>2.11.19</docker-maven-plugin.version>
+    <docker-maven-plugin.version>0.4.13</docker-maven-plugin.version>
     <frontend-maven-plugin.version>1.0</frontend-maven-plugin.version>
   </properties>
 
@@ -65,6 +65,10 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-ws</artifactId>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -121,11 +125,6 @@
     <dependency>
       <groupId>io.springfox</groupId>
       <artifactId>springfox-swagger2</artifactId>
-      <version>${spring-fox.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>io.springfox</groupId>
-      <artifactId>springfox-bean-validators</artifactId>
       <version>${spring-fox.version}</version>
     </dependency>
     <dependency>
@@ -396,11 +395,32 @@
           </excludes>
         </configuration>
       </plugin>
+      <!-- tag::docker-maven-plugin[] -->
+      <plugin>
+        <groupId>com.spotify</groupId>
+        <artifactId>docker-maven-plugin</artifactId>
+        <configuration>
+          <imageName>continuous-delivery/demo</imageName>
+          <baseImage>anapsix/alpine-java:8</baseImage>
+          <!-- @formatter:off -->
+            <entryPoint>["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "/${project.build.finalName}.jar","--flyway.url=jdbc:mysql://db/NGSPRING?useUnicode=true&amp;characterEncoding=utf8","--spring.datasource.url=jdbc:mysql://db/NGSPRING?useUnicode=true&amp;characterEncoding=utf8","--server.port=${server.port}"]</entryPoint>
+            <!-- @formatter:on -->
+          <!-- copy the service's jar file from target into the root directory of the image -->
+          <resources>
+            <resource>
+              <targetPath>/</targetPath>
+              <directory>${project.build.directory}</directory>
+              <include>${project.build.finalName}.jar</include>
+            </resource>
+          </resources>
+        </configuration>
+      </plugin>
+      <!-- end::docker-maven-plugin[] -->
     </plugins>
     <pluginManagement>
       <plugins>
         <plugin>
-          <groupId>com.alexecollins.docker</groupId>
+          <groupId>com.spotify</groupId>
           <artifactId>docker-maven-plugin</artifactId>
           <version>${docker-maven-plugin.version}</version>
         </plugin>
@@ -416,30 +436,6 @@
       </properties>
       <build>
         <plugins>
-          <!-- tag::docker-maven-plugin[] -->
-          <plugin>
-            <groupId>com.alexecollins.docker</groupId>
-            <artifactId>docker-maven-plugin</artifactId>
-            <configuration>
-              <!-- (optional) remove images created by Dockerfile (default true) -->
-              <removeIntermediateImages>true</removeIntermediateImages>
-              <!-- (optional) do/do not cache images (default false), disable to
-                  get the freshest images -->
-              <cache>true</cache>
-            </configuration>
-            <executions>
-              <execution>
-                <goals>
-                  <goal>stop</goal>
-                  <goal>clean</goal>
-                  <goal>package</goal>
-                  <goal>start</goal>
-                </goals>
-                <phase>package</phase>
-              </execution>
-            </executions>
-          </plugin>
-          <!-- end::docker-maven-plugin[] -->
           <plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>sql-maven-plugin</artifactId>
@@ -495,11 +491,6 @@
     <repository>
       <id>spring-milestones</id>
       <url>http://repo.spring.io/milestone</url>
-    </repository>
-    <repository>
-      <id>jcenter-snapshots</id>
-      <name>jcenter</name>
-      <url>http://oss.jfrog.org/artifactory/oss-snapshot-local/</url>
     </repository>
   </repositories>
 

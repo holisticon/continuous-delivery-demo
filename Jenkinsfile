@@ -5,61 +5,72 @@ properties properties: [
 
 timeout(60) {
   node {
-    withEnv(["JAVA_HOME=${tool 'jdk-8-oracle'}", "PATH+MAVEN=${tool 'Maven 3.5.0'}/bin:${env.JAVA_HOME}/bin"]) {
-      def buildNumber = env.BUILD_NUMBER
-      def branchName = env.BRANCH_NAME
-      def workspace = env.WORKSPACE
-      def buildUrl = env.BUILD_URL
+    def buildNumber = env.BUILD_NUMBER
+    def branchName = env.BRANCH_NAME
+    def workspace = env.WORKSPACE
+    def buildUrl = env.BUILD_URL
 
-      // PRINT ENVIRONMENT TO JOB
-      echo "workspace directory is $workspace"
-      echo "build URL is $buildUrl"
-      echo "build Number is $buildNumber"
-      echo "branch name is $branchName"
-      echo "PATH is $env.PATH"
+    try {
+      withEnv(["JAVA_HOME=${tool 'jdk-8-oracle'}", "PATH+MAVEN=${tool 'mvn latest'}/bin:${env.JAVA_HOME}/bin"]) {
 
-      try {
-        stage('Clean workspace') {
-          deleteDir()
-        }
+        // PRINT ENVIRONMENT TO JOB
+        echo "workspace directory is $workspace"
+        echo "build URL is $buildUrl"
+        echo "build Number is $buildNumber"
+        echo "branch name is $branchName"
+        echo "PATH is $env.PATH"
 
         stage('Checkout') {
           checkout scm
         }
 
         stage('Build') {
-          sh "mvn clean package"
+          sh "mvn package"
+          archiveArtifacts artifacts: '**/target/*.jar'
         }
 
         stage('Unit-Tests') {
           sh "mvn test -Dmaven.test.failure.ignore"
-          junit 'angular-spring-boot-webapp/target/surefire-reports/TEST*.xml'
+          junit healthScaleFactor: 1.0, testResults: 'angular-spring-boot-webapp/target/surefire-reports/TEST*.xml'
         }
 
-        stage('Integration-Tests') {
-          node('mac') {
-            env.JAVA_HOME = '/Library/Java/JavaVirtualMachines/jdk1.8.0_25.jdk/Contents/Home/jre'
+        node('selenium') {
+          withEnv(["JAVA_HOME=${tool 'jdk-8-oracle'}", "PATH+MAVEN=/usr/local/bin:${env.JAVA_HOME}/bin"]) {
 
             checkout scm
-            sh "mvn -Pdocker -Ddocker.host=tcp://127.0.0.1:2375 clean verify -Dmaven.test.failure.ignore"
 
-            archiveArtifacts '**/target/*.jar'
-            junit  'angular-spring-boot-webapp/target/failsafe-reports/TEST*.xml'
-            publishHTML(target: [
-              reportDir            : 'angular-spring-boot-webapp/target/site/serenity/',
-              reportFiles          : 'index.html',
-              reportName           : 'Serenity Test Report',
-              keepAll              : true,
-              alwaysLinkToLastBuild: true,
-              allowMissing         : false
-            ])
+            stage('Prepare Docker Images') {
+              // build docker images
+              dir('angular-spring-boot-webapp') {
+                sh "mvn package docker:build -Dmaven.test.skip"
+              }
+              // run images
+              sh "./docker-run.sh"
+              sh "echo Waiting for containers to come up"
+              sh "echo -n 'wait for app to be ready '; until \$(curl --output /dev/null --silent --head --fail localhost:41180/login); do printf '.'; sleep 5; done;"
+            }
+
+
+            stage('Integration-Tests') {
+              dir('angular-spring-boot-webapp') {
+                sh "mvn -Pdocker verify -Dmaven.test.failure.ignore"
+                junit healthScaleFactor: 1.0, testResults: 'target/failsafe-reports/TEST*.xml'
+                publishHTML(target: [
+                  reportDir            : 'target/site/serenity/',
+                  reportFiles          : 'index.html',
+                  reportName           : 'Serenity Test Report',
+                  keepAll              : true,
+                  alwaysLinkToLastBuild: true,
+                  allowMissing         : false
+                ])
+              }
+            }
           }
         }
-
-      } catch (e) {
-        rocketSend channel: 'holi-demos', emoji: ':rotating_light:', message: 'Fehler'
-        throw e
       }
+    } catch (e) {
+      rocketSend channel: 'holi-demos', emoji: ':rotating_light:', message: 'Fehler'
+      throw e
     }
   }
 }
