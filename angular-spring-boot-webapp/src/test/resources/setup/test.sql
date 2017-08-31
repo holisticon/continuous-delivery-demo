@@ -1,3 +1,8 @@
+-- clean up first
+DELETE FROM event;
+DELETE FROM user;
+
+-- insert data
 INSERT INTO event(event_id,event_description,start_date,end_date,insert_date,deleted)
 VALUES("1", "(Responsive) UI Testing mit Galen", "2015-08-18", NULL, "2015-07-01", false);
 
