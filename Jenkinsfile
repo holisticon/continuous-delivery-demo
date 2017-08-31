@@ -9,7 +9,7 @@ timeout(60) {
     def branchName = env.BRANCH_NAME
     def workspace = env.WORKSPACE
     def buildUrl = env.BUILD_URL
-    def dockerServerUrl = ''
+    def dockerServerUrl = 'http://localhost:41180'
 
     try {
       withEnv(["JAVA_HOME=${tool 'jdk-8-oracle'}", "PATH+MAVEN=${tool 'mvn latest'}/bin:${env.JAVA_HOME}/bin"]) {
@@ -26,7 +26,7 @@ timeout(60) {
         }
 
         stage('Build') {
-          sh "mvn package"
+          sh "mvn package -DskipUnitTests=true"
           archiveArtifacts artifacts: '**/target/*.jar'
         }
 
