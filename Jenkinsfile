@@ -54,7 +54,7 @@ timeout(60) {
 
             stage('Integration-Tests') {
               dir('angular-spring-boot-webapp') {
-                sh "mvn -Pdocker verify -Dmaven.test.failure.ignore -DskipUnitTests=true -DskipNode=true -Dwebdriver.base.url=${dockerServerUrl}"
+                sh "mvn -Pdocker verify -Dmaven.test.failure.ignore -DskipUnitTests=true -DskipNode=true -Dwebdriver.base.url=${dockerServerUrl} -Dwebdriver.remote.url=http://localhost:5055/wd/hub -Dwebdriver.remote.driver=chrome"
                 junit healthScaleFactor: 1.0, testResults: 'target/failsafe-reports/TEST*.xml'
                 publishHTML(target: [
                   reportDir            : 'target/site/serenity/',
