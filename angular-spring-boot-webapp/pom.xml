@@ -494,14 +494,11 @@
     <repository>
       <id>spring-milestones</id>
       <url>http://repo.spring.io/milestone</url>
-    </repository>
+    </repository> 
     <repository>
       <id>jcenter-snapshots</id>
       <name>jcenter</name>
-      <snapshots>
-        <enabled>true</enabled>
-      </snapshots>
-      <url>https://jcenter.bintray.com/</url>
+      <url>http://oss.jfrog.org/artifactory/oss-snapshot-local/</url>
     </repository>
   </repositories>
 
