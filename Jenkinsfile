@@ -9,6 +9,7 @@ timeout(60) {
     def branchName = env.BRANCH_NAME
     def workspace = env.WORKSPACE
     def buildUrl = env.BUILD_URL
+    def dockerServerUrl = ''
 
     try {
       withEnv(["JAVA_HOME=${tool 'jdk-8-oracle'}", "PATH+MAVEN=${tool 'mvn latest'}/bin:${env.JAVA_HOME}/bin"]) {
@@ -47,13 +48,13 @@ timeout(60) {
               // run images
               sh "./docker-run.sh"
               sh "echo Waiting for containers to come up"
-              sh "echo -n 'wait for app to be ready '; until \$(curl --output /dev/null --silent --head --fail localhost:41180/login); do printf '.'; sleep 5; done;"
+              sh "echo -n 'wait for app to be ready '; until \$(curl --output /dev/null --silent --head --fail ${dockerServerUrl}/login); do printf '.'; sleep 5; done;"
             }
 
 
             stage('Integration-Tests') {
               dir('angular-spring-boot-webapp') {
-                sh "mvn -Pdocker verify -Dmaven.test.failure.ignore"
+                sh "mvn -Pdocker verify -Dmaven.test.failure.ignore -DskipUnitTests=true -DskipNode=true -Dwebdriver.base.url=${dockerServerUrl}"
                 junit healthScaleFactor: 1.0, testResults: 'target/failsafe-reports/TEST*.xml'
                 publishHTML(target: [
                   reportDir            : 'target/site/serenity/',

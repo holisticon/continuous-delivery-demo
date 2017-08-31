@@ -22,6 +22,7 @@
   <properties>
     <skipUnitTests>false</skipUnitTests>
     <skipITs>true</skipITs>
+    <skipNode>false</skipNode>
     <!-- java settings version -->
     <java.version>1.7</java.version>
     <lombok.version>1.16.4</lombok.version>
@@ -172,13 +173,6 @@
       <artifactId>serenity-core</artifactId>
       <version>${serenity.version}</version>
       <scope>test</scope>
-      <exclusions>
-        <!-- Need to exclude for servlet API, see https://groups.google.com/forum/#!topic/thucydides-users/HwfhPGseucI-->
-        <exclusion>
-          <groupId>net.sourceforge.htmlunit</groupId>
-          <artifactId>htmlunit</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
     <dependency>
       <groupId>net.serenity-bdd</groupId>
@@ -204,6 +198,7 @@
         <artifactId>frontend-maven-plugin</artifactId>
         <version>${frontend-maven-plugin.version}</version>
         <configuration>
+          <skip>${skipNode}</skip>
           <workingDirectory>${project.basedir}</workingDirectory>
         </configuration>
         <executions>
@@ -494,7 +489,7 @@
     <repository>
       <id>spring-milestones</id>
       <url>http://repo.spring.io/milestone</url>
-    </repository> 
+    </repository>
     <repository>
       <id>jcenter-snapshots</id>
       <name>jcenter</name>
