@@ -498,6 +498,9 @@
     <repository>
       <id>jcenter-snapshots</id>
       <name>jcenter</name>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
       <url>https://jcenter.bintray.com/</url>
     </repository>
   </repositories>
