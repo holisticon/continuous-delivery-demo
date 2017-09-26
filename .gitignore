@@ -25,3 +25,4 @@ Procfile
 
 # Vagrant
 .vagrant/*
+ansible/.imported-roles

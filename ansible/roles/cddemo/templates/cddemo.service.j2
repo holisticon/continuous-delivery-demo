@@ -1,0 +1,11 @@
+[Unit]
+Description={{ app }}
+After=syslog.target
+
+[Service]
+User={{cddemo_user}}
+ExecStart={{ cddemo_directory }}/{{cddemo_target_filename}}
+SuccessExitStatus=143
+
+[Install]
+WantedBy=multi-user.target

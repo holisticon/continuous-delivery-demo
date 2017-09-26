@@ -3,6 +3,10 @@ properties properties: [
   disableConcurrentBuilds()
 ]
 
+@Library('holisticon-build-library')
+def utils = new de.holisticon.ci.jenkins.Utils()
+def maven = new de.holisticon.ci.jenkins.Maven()
+
 timeout(60) {
   node {
     def buildNumber = env.BUILD_NUMBER
@@ -10,6 +14,7 @@ timeout(60) {
     def workspace = env.WORKSPACE
     def buildUrl = env.BUILD_URL
     def dockerServerUrl = 'http://localhost:41180'
+    def appVersion = maven.getProjectVersion()
 
     try {
       withEnv(["JAVA_HOME=${tool 'jdk-8-oracle'}", "PATH+MAVEN=${tool 'mvn latest'}/bin:${env.JAVA_HOME}/bin"]) {
@@ -48,7 +53,7 @@ timeout(60) {
               // run images
               sh "./docker-run.sh"
               sh "echo Waiting for containers to come up"
-              sh "echo -n 'wait for app to be ready '; until \$(curl --output /dev/null --silent --head --fail ${dockerServerUrl}/login); do printf '.'; sleep 5; done;"
+              utils.waitForAppToBeReady(dockerServerUrl)
             }
 
 
@@ -65,6 +70,17 @@ timeout(60) {
                   allowMissing         : false
                 ])
               }
+            }
+          }
+        }
+
+        sshagent(['e96eb307-86ff-4858-82bb-cdc20bf1e4b4']) {
+          stage('Deploy') {
+            dir("ansible") {
+              // Install / update dependencies
+              sh "ansible-galaxy install -r requirements.yml -f"
+              // Execute playbook
+              sh "ansible-playbook cddemo.yml --extra-vars 'app_version=${appVersion} path_to_artifact=../angular-spring-boot-webapp/target/ng-spring-boot.jar  --ansible_ssh_port=\${ANSIBLE_PORT}'"
             }
           }
         }

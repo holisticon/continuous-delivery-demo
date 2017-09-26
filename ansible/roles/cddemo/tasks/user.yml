@@ -1,0 +1,7 @@
+---
+
+- name: Ensure group {{ cddemo_user }} is present
+  group: name={{ cddemo_user }} state=present
+
+- name: Ensure user {{ username }} is present
+  user: name={{ cddemo_user }} groups="{{ cddemo_user }}" shell=/sbin/nologin

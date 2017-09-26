@@ -1,0 +1,13 @@
+---
+- hosts: all
+  gather_facts: True
+
+  vars:
+    - java_version: 8
+
+  vars_files:
+    - secrets.yml
+
+  roles:
+    - { role: srsp.oracle-java }
+    - { role: cddemo }

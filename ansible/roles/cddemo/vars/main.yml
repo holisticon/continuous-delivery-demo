@@ -1,0 +1,11 @@
+---
+cddemo_appname: cddemo
+cddemo_user: "{{cddemo_appname}}"
+app: "{{cddemo_appname}}"
+cddemo_directory: /opt/cddemo
+cddemo_log_directory: /var/log/cddemo
+path_to_artifact: ../target/ng-spring-boot.jar
+cddemo_target_filename: cddemo.jar
+cddemo_servicename: "{{cddemo_appname}}"
+# Comma separated list of spring profiles for production
+spring_profiles: env-prod

@@ -1,0 +1,40 @@
+server {
+  listen 80 default_server;
+  listen [::]:80 default_server ipv6only=on;
+
+  return 301 https://$host$request_uri;
+}
+
+server {
+
+  listen 443 ssl http2;
+  listen [::]:443 ssl http2;
+
+  server_name {{ inventory_hostname }};
+
+  include /etc/nginx/ssl.conf;
+  ssl_certificate /etc/letsencrypt/live/{{ inventory_hostname }}/fullchain.pem;
+  ssl_certificate_key /etc/letsencrypt/live/{{ inventory_hostname }}/privkey.pem;
+  ssl_trusted_certificate /etc/letsencrypt/live/{{ inventory_hostname }}/chain.pem;
+
+  root {{ cddemo_directory }};
+
+  location /cddemo {
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-Host $host;
+    proxy_set_header X-Forwarded-Server $host;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_pass http://127.0.0.1:8080/;
+    proxy_redirect http:// https://;
+  }
+
+  # deny access to .htaccess files
+  location ~ /\.ht {
+         deny all;
+  }
+  # deny access to the .jar file
+  location ~ /\*.jar {
+           deny all;
+  }
+}

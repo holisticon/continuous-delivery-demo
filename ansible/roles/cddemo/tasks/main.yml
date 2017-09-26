@@ -1,0 +1,33 @@
+---
+
+- include: user.yml
+
+- name: ensure deployment directory exists
+  file: path="{{cddemo_directory}}" state=directory owner="{{cddemo_user}}" mode=0755
+
+- name: ensure log directory exists
+  file: path="{{cddemo_log_directory}}" state=directory owner="{{cddemo_user}}" mode=0755
+
+- name: ensure application is available by nginx reverse proxy
+  template: src=cddemo.site.j2 dest=/etc/nginx/conf.d/cddemo.conf
+  notify: nginx_restart
+
+- name: copy cddemo artifact from target to remote server
+  copy: src="{{path_to_artifact}}" dest="{{cddemo_directory}}/{{cddemo_target_filename}}" owner="{{cddemo_user}}" mode=0755
+  notify:
+    - app_restart
+
+- name: copy systemd config file
+  template: src=cddemo.conf.j2 dest="{{cddemo_directory}}/{{app}}.conf" owner="{{cddemo_user}}" mode=0644
+  notify:
+    - daemon_reload
+    - app_restart
+
+- name: Create Systemd script
+  template: src=cddemo.service.j2 dest=/etc/systemd/system/{{ app }}.service
+  notify:
+    - daemon_reload
+    - app_restart
+
+- name: Start cddemo on boot
+  service: name="cddemo" enabled=yes
