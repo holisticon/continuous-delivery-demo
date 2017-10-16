@@ -14,7 +14,6 @@ timeout(60) {
     def workspace = env.WORKSPACE
     def buildUrl = env.BUILD_URL
     def dockerServerUrl = 'http://localhost:41180'
-    def appVersion = maven.getProjectVersion()
 
     try {
       withEnv(["JAVA_HOME=${tool 'jdk-8-oracle'}", "PATH+MAVEN=${tool 'mvn latest'}/bin:${env.JAVA_HOME}/bin"]) {
@@ -76,6 +75,7 @@ timeout(60) {
 
         sshagent(['e96eb307-86ff-4858-82bb-cdc20bf1e4b4']) {
           stage('Deploy') {
+            def appVersion = maven.getProjectVersion()
             dir("ansible") {
               // Install / update dependencies
               sh "ansible-galaxy install -r requirements.yml -f"
