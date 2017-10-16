@@ -40,7 +40,7 @@ VALUES ("1", "user", "$2a$10$o2C6NPSNsq45fV.qArHXiep0OGb4YNCODGQNFpKWQ7TX7jZuiCK
 * Start the MySQL Server
 
 ```bash
-$ mvn spring-boot:run -Dspring.datasource.url=jdbc:mysql://127.0.0.1:3306/NGSPRING?useUnicode=true&characterEncoding=utf8 -Dflyway.url=jdbc:mysql://127.0.0.1:3306/NGSPRING
+$ ./mvnw spring-boot:run -Dspring.datasource.url=jdbc:mysql://127.0.0.1:3306/NGSPRING?useUnicode=true&characterEncoding=utf8 -Dflyway.url=jdbc:mysql://127.0.0.1:3306/NGSPRING
 ```
 
 ### Advanced usage
@@ -67,7 +67,7 @@ Projects can now imported in your favourite IDE
 ```bash
 $ vagrant up
 $ cd angular-spring-boot-webapp
-$ mvn spring-boot:run
+$ ../mvnw spring-boot:run
 ```
 
 2. start the frontend:
@@ -93,7 +93,8 @@ API is available at [](http://localhost:9080/swagger-ui.html)
 #### Run
 
 ```bash
-$ mvn -Pdocker spring-boot:run
+$ cd angular-spring-boot-webapp
+$ ../mvnw -Pdocker spring-boot:run
 ```
 
 
