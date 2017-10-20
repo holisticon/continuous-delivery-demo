@@ -72,6 +72,12 @@ timeout(60) {
             }
           }
         }
+        
+        stage('SonarQube analysis') {
+            withSonarQubeEnv('HoliSonarqube') {
+                sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.2:sonar'
+            }
+        }
 
         sshagent(['e96eb307-86ff-4858-82bb-cdc20bf1e4b4']) {
           stage('Deploy') {
