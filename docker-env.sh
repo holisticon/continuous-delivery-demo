@@ -2,6 +2,7 @@
 
 export DB_PORT=33306
 export SERVER_PORT=41180
+export ZAP_PORT=44444
 
 export MYSQL_ROOT_PASSWORD="root"
 export MYSQL_USER="ngspring"
