@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suppressions xmlns="https://jeremylong.github.io/DependencyCheck/dependency-suppression.1.1.xsd">
+  <suppress>
+    <gav regex="true">^org\.projectlombok:lombok:.*$</gav>
+    <cve>CVE-2016-2150</cve>
+    <cve>CVE-2016-0749</cve>
+  </suppress>
+  <suppress>
+    <gav regex="true">^ognl:ognl:.*$</gav>
+    <cve>CVE-2016-3093</cve>
+  </suppress>
+  <suppress>
+    <gav regex="true">^mysql:mysql-connector-java:.*$</gav>
+    <cve>CVE-2017-3635</cve>
+    <cve>CVE-2012-5627</cve>
+    <cve>CVE-2009-0819</cve>
+    <cve>CVE-2008-7247</cve>
+    <cve>CVE-2008-3963</cve>
+    <cve>CVE-2008-2079</cve>
+    <cve>CVE-2007-5970</cve>
+  </suppress>
+  <suppress>
+    <gav regex="true">^org\.springframework:spring-tx:.*$</gav>
+    <cve>CVE-2016-9878</cve>
+  </suppress>
+  <suppress>
+    <gav regex="true">^ch\.qos\.logback:logback-core:.*$</gav>
+    <cve>CVE-2017-5929</cve>
+  </suppress>
+  <suppress>
+    <gav regex="true">^javax\.validation:validation-api:.*$</gav>
+    <cve>CVE-2013-4499</cve>
+  </suppress>
+</suppressions>

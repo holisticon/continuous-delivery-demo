@@ -22,6 +22,7 @@
   <properties>
     <skipUnitTests>false</skipUnitTests>
     <skipITs>true</skipITs>
+    <skipSecurityTests>true</skipSecurityTests>
     <skipNode>false</skipNode>
     <!-- java settings version -->
     <java.version>1.7</java.version>
@@ -192,6 +193,25 @@
     <defaultGoal>clean install</defaultGoal>
     <finalName>ng-spring-boot</finalName>
     <plugins>
+      <plugin>
+        <groupId>org.owasp</groupId>
+        <artifactId>dependency-check-maven</artifactId>
+        <configuration>
+          <format>ALL</format>
+          <skip>${skipSecurityTests}</skip>
+          <skipTestScope>true</skipTestScope>
+          <suppressionFiles>
+            <suppressionFile>${project.basedir}/dependency-check-suppressions.xml</suppressionFile>
+          </suppressionFiles>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
       <!-- tag::frontend-maven-plugin[] -->
       <plugin>
         <groupId>com.github.eirslett</groupId>
@@ -426,6 +446,99 @@
     <!-- end::docker-maven-plugin[] -->
   </build>
   <profiles>
+    <profile>
+      <id>security-check</id>
+      <properties>
+        <skipSecurityTests>false</skipSecurityTests>
+        <skipNode>true</skipNode>
+        <skipUnitTests>true</skipUnitTests>
+        <skipITs>true</skipITs>
+        <skipTests>true</skipTests>
+      </properties>
+      <build>
+        <plugins>
+          <!-- tag::owasp-zap-include[] -->
+          <plugin>
+            <groupId>de.martinreinhardt-online</groupId>
+            <artifactId>zap-maven-plugin</artifactId>
+            <version>${zap-maven-plugin.version}</version>
+            <configuration>
+              <!-- Configuration parameters -->
+              <zapHost>localhost</zapHost>
+              <zapPort>44444</zapPort>
+              <failingRiskCodeThreshold>5</failingRiskCodeThreshold>
+              <loginUrl>http://ngspring:41180/login</loginUrl>
+              <targetUrl>http://ngspring:41180/</targetUrl>
+              <authenticationType>form</authenticationType>
+              <username>user</username>
+              <password>password</password>
+              <skip>${skipSecurityTests}</skip>
+              <shouldRunAjaxSpider>true</shouldRunAjaxSpider>
+            </configuration>
+            <executions>
+              <execution>
+                <phase>verify</phase>
+                <goals>
+                  <goal>analyze</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <!-- end::owasp-zap-include[] -->
+          <!-- tag::owasp-maven-include[] -->
+          <plugin>
+            <groupId>org.owasp</groupId>
+            <artifactId>dependency-check-maven</artifactId>
+            <configuration>
+              <skip>${skipSecurityTests}</skip>
+              <failBuildOnCVSS>5</failBuildOnCVSS>
+            </configuration>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>check</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <!-- end::owasp-maven-include[] -->
+          <!-- tag::nsp-maven-include[] -->
+          <plugin>
+            <groupId>com.github.eirslett</groupId>
+            <artifactId>frontend-maven-plugin</artifactId>
+            <version>${frontend-maven-plugin.version}</version>
+            <configuration>
+              <skip>${skipSecurityTests}</skip>
+              <workingDirectory>${project.basedir}</workingDirectory>
+            </configuration>
+            <executions>
+              <execution>
+                <id>install node and npm</id>
+                <goals>
+                  <goal>install-node-and-npm</goal>
+                </goals>
+                <phase>generate-resources</phase>
+                <configuration>
+                  <nodeVersion>${node.version}</nodeVersion>
+                  <npmVersion>${npm.version}</npmVersion>
+                </configuration>
+              </execution>
+              <execution>
+                <id>npm check</id>
+                <goals>
+                  <goal>npm</goal>
+                </goals>
+                <phase>generate-resources</phase>
+                <configuration>
+                  <arguments>run check</arguments>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <!-- end::nsp-maven-include[] -->
+        </plugins>
+      </build>
+    </profile>
     <profile>
       <id>docker</id>
       <properties>

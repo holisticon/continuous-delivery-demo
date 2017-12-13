@@ -28,3 +28,32 @@ services:
     links:
       - db
 
+  zap:
+    container_name: continuoussecurity_zap
+    image: owasp/zap2docker-stable
+    ports:
+      - "${ZAP_PORT}:${ZAP_PORT}"
+      - "80:${ZAP_PORT}"
+    expose:
+      - 80
+    user: zap
+    depends_on:
+      ngspring:
+        condition: service_healthy
+    links:
+      - ngspring
+    networks:
+      default:
+        aliases:
+          - zap
+    healthcheck:
+        test: ["CMD", "wget", "http://localhost:${ZAP_PORT}"]
+        interval: 30s
+        timeout: 10s
+        retries: 5
+    volumes:
+        - ./target/zap:/zap/wrk:rw
+    # You can start the ZAP in headless mode with xvfb following command
+    # or: zap-baseline.py -t  http://ngspring:41180
+    command: zap-x.sh -daemon -port ${ZAP_PORT} -host 0.0.0.0  -config api.disablekey=true -config api.addrs.addr.name=.* -config api.addrs.addr.regex=true
+

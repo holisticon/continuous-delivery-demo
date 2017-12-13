@@ -72,7 +72,35 @@ timeout(60) {
             }
           }
         }
-        
+
+        stage('Security Checks') {
+          try {
+            sh "mvn -Pdocker,security-check verify"
+            publishHTML(target: [
+              reportDir            : 'angular-spring-boot-webapp/target',
+              reportFiles          : 'dependency-check-report.html',
+              reportName           : 'OWASP Dependency Check Report',
+              keepAll              : true,
+              alwaysLinkToLastBuild: true,
+              allowMissing         : false
+            ])
+          }
+          finally {
+            // stop images
+            sh "./docker-stop.sh"
+            archiveArtifacts artifacts: '*/target/zap-reports/*.xml'
+            publishHTML(target: [
+              reportDir            : 'angular-spring-boot-webapp/target/zap-reports',
+              reportFiles          : 'zapReport.html',
+              reportName           : 'ZAP Report',
+              keepAll              : true,
+              alwaysLinkToLastBuild: true,
+              allowMissing         : false
+            ])
+            dependencyCheckPublisher canComputeNew: false, defaultEncoding: '', failedTotalAll: '150', healthy: '', pattern: 'target/dependency-check-report.xml', unHealthy: ''
+          }
+        }
+
         stage('SonarQube analysis') {
             withSonarQubeEnv('HoliSonarqube') {
                 sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.2:sonar'
