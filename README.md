@@ -3,6 +3,8 @@
 [![Build Status](https://travis-ci.org/holisticon/continuous-delivery-demo.svg?branch=master)](https://travis-ci.org/holisticon/continuous-delivery-demo) 
 [![Build Status](https://jenkins.holisticon.de/buildStatus/icon?job=Public/ContinuousDelivery_Demo)](https://jenkins.holisticon.de/blue/organizations/jenkins/Public%2FContinuousDelivery_Demo/activity)
 [![Build Status](https://jenkins.holisticon.de/buildStatus/icon?job=Public/ContinousDelivery_BranchDemo/master)](https://jenkins.holisticon.de/blue/organizations/jenkins/Public%2FContinousDelivery_BranchDemo/branches/)
+[![Maintainability](https://api.codeclimate.com/v1/badges/c47c5fea205f0298e0b0/maintainability)](https://codeclimate.com/github/holisticon/continuous-delivery-demo/maintainability)
+
 ## Development-Setup
 
 REST-API is created with Swagger, see [here](https://continousdelivery.herokuapp.com/swagger-ui.html)
