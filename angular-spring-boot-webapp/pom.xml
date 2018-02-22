@@ -33,7 +33,7 @@
     <spring-fox.version>2.7.1-SNAPSHOT</spring-fox.version>
     <mysql-connector.version>5.1.37</mysql-connector.version>
     <junit.version>4.12</junit.version>
-    <serenity.version>1.2.2</serenity.version>
+    <serenity.version>1.9.0-rc.3</serenity.version>
     <groovy-json.version>2.4.8</groovy-json.version>
     <threadCount.uitest>12</threadCount.uitest>
     <webdriver.driver>firefox</webdriver.driver>
