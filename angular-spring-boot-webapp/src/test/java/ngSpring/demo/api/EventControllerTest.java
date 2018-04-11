@@ -1,7 +1,7 @@
 package ngSpring.demo.api;
 
-import com.jayway.restassured.RestAssured;
-import com.jayway.restassured.http.ContentType;
+import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
 import ngSpring.demo.domain.entities.Event;
 import ngSpring.demo.util.RestITBase;
 import org.apache.commons.httpclient.HttpStatus;

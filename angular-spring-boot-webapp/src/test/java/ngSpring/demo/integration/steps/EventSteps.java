@@ -1,8 +1,8 @@
 package ngSpring.demo.integration.steps;
 
 import com.google.inject.Inject;
-import com.jayway.restassured.RestAssured;
-import com.jayway.restassured.response.Response;
+import io.restassured.RestAssured;
+import io.restassured.response.Response;
 import net.thucydides.core.annotations.Step;
 import net.thucydides.core.annotations.StepGroup;
 import net.thucydides.core.configuration.SystemPropertiesConfiguration;

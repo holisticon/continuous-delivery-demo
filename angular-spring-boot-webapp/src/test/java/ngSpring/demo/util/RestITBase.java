@@ -1,8 +1,8 @@
 package ngSpring.demo.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jayway.restassured.RestAssured;
-import com.jayway.restassured.specification.RequestSpecification;
+import io.restassured.RestAssured;
+import io.restassured.specification.RequestSpecification;
 import ngSpring.demo.domain.entities.User;
 import ngSpring.demo.repositories.EventRepository;
 import ngSpring.demo.repositories.UserRepository;
@@ -20,7 +20,7 @@ import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.jayway.restassured.RestAssured.given;
+import static io.restassured.RestAssured.given;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ActiveProfiles("test")
